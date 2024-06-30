@@ -49,3 +49,15 @@ def extract():
         extracted_data = pd.concat([extracted_data, pd.DataFrame(extract_from_xml(xmlfile))], ignore_index=True)
 
     return extracted_data
+
+
+def transform(data):
+    """Convert inches to meters and round off to two decimals
+    1 inch is 0.0254 meters """
+    data['price'] = round(data.price * 0.0254, 2)
+
+    return data
+
+
+def load_data(target_file, transformed_data):
+    transformed_data.to_csv(target_file)
