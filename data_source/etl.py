@@ -3,7 +3,6 @@ import pandas as pd
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-
 log_file = "log_file.txt"
 target_file = "transformed_data.csv"
 
@@ -71,3 +70,33 @@ def log_progress(message):
     timestamp = now.strftime(timestamp_format)
     with open(log_file, "a") as f:
         f.write(timestamp + ',' + message + '\n')
+
+
+# Log the initialization of the ETL process
+log_progress("ETL Job Started")
+
+# Log the beginning of the Extraction process
+log_progress("Extract phase Started")
+extracted_data = extract()
+
+# Log the completion of the Extraction process
+log_progress("Extract phase Ended")
+
+# Log the beginning of the Transformation process
+log_progress("Transform phase Started")
+transformed_data = transform(extracted_data)
+print("Transformed Data")
+print(transformed_data)
+
+# Log the completion of the Transformation process
+log_progress("Transform phase Ended")
+
+# Log the beginning of the Loading process
+log_progress("Load phase Started")
+load_data(target_file, transformed_data)
+
+# Log the completion of the Loading process
+log_progress("Load phase Ended")
+
+# Log the completion of the ETL process
+log_progress("ETL Job Ended")
