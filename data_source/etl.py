@@ -1,6 +1,8 @@
 import glob
 import pandas as pd
 import xml.etree.ElementTree as ET
+from datetime import datetime
+
 
 log_file = "log_file.txt"
 target_file = "transformed_data.csv"
@@ -61,3 +63,11 @@ def transform(data):
 
 def load_data(target_file, transformed_data):
     transformed_data.to_csv(target_file)
+
+
+def log_progress(message):
+    timestamp_format = '%Y-%h-%d-%H:%M:%S'  # Year-Monthname-Day-Hour-Minute-Second
+    now = datetime.now()  # get current timestamp
+    timestamp = now.strftime(timestamp_format)
+    with open(log_file, "a") as f:
+        f.write(timestamp + ',' + message + '\n')
