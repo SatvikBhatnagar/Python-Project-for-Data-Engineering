@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 url = 'https://web.archive.org/web/20230902185655/https://en.everybodywiki.com/100_Most_Highly-Ranked_Films'
 db_name = 'Movies.db'
 table_name = 'Top_50'
-csv_path = '/home/project/top_50_films.csv'
+csv_path = './top_50_films.csv'
 df = pd.DataFrame(columns=["Film","Year", "Rotten Tomatoes' Top 100"])
 count = 0
 
@@ -31,3 +31,9 @@ for row in rows:
 
 #for the films released in 2000, run the code below
 # df2000 = df[(df['Year'] > 2000) | (df['Year'] == 2000)]
+
+df.to_csv(csv_path)
+
+conn = sqlite3.connect(db_name)
+df.to_sql(table_name, conn, if_exists='replace', index=False)
+conn.close()
